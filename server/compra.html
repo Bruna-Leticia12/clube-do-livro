@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clube do Livro - Compra</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="navbar navbar-dark bg-primary px-4">
+      <a href="home.html" class="navbar-brand">Clube do Livro</a>
+      <button id="logoutBtn" class="btn btn-light">Logout</button>
+    </header>
+    <main class="container py-4 d-flex">
+      <div class="me-4">
+        <img id="bookImage" class="img-fluid" src="" alt="Book Image" />
+      </div>
+      <form class="w-50">
+        <div class="mb-3">
+          <label for="price" class="form-label">Preço</label>
+          <input type="text" id="price" class="form-control" readonly />
+        </div>
+        <div class="mb-3">
+          <label for="payment" class="form-label">Método de Pagamento</label>
+          <select id="payment" class="form-select">
+            <option value="">Escolha...</option>
+            <option value="pix">Pix</option>
+            <option value="visa">Cartão Visa</option>
+            <option value="master">Cartão MasterCard</option>
+          </select>
+        </div>
+        <button
+          type="button"
+          id="purchaseBtn"
+          class="btn btn-success w-100"
+          disabled
+        >
+          Realizar a Compra
+        </button>
+      </form>
+    </main>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
