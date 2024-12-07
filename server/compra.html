@@ -23,8 +23,8 @@
       </div>
       <div class="mb-3">
         <label for="cpf" class="form-label">CPF</label>
-        <input type="text" id="cpf" class="form-control" placeholder="Digite seu CPF" required />
-        <p id="cpfError" class="text-danger mt-1"></p>
+        <input type="text" id="cpf"  maxlength="14" class="form-control" placeholder="Digite seu CPF" required />
+        <p id="cpfError" class="text-danger mt-1" style="display: none;">CPF inválido</p> 
       </div>
       <button id="purchaseBtn" class="btn btn-success" disabled>Realizar reserva</button>
     </form>

@@ -66,9 +66,9 @@ function purchase(title, price, image) {
 if (document.getElementById("bookImage")) {
   const book = JSON.parse(localStorage.getItem("selectedBook"));
   document.getElementById("bookImage").src = book.image;
-  document.getElementById("name").value = book.title;
-
+  
   const cpfInput = document.getElementById("cpf");
+  const cpfError = document.getElementById("cpfError");
   const purchaseBtn = document.getElementById("purchaseBtn");
 
   cpfInput.addEventListener("input", (e) => {
@@ -79,11 +79,24 @@ if (document.getElementById("bookImage")) {
       .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
     const isValidCpf = validateCpf(value);
+    
+    cpfError.style.display = "none";
+    
+    if(e.target.value.length === 14){
+
+      if (!isValidCpf) {
+        cpfError.style.display = "block";
+      }
+    }
+
+
+    
     purchaseBtn.disabled = !isValidCpf || !document.getElementById("name").value.trim();
   });
 
-  purchaseBtn.addEventListener("click", (e) => {
 
+  purchaseBtn.addEventListener("click", (e) => {
+    
     e.preventDefault();
     
     alert("Reserva de livro realizada com sucesso!");
@@ -96,6 +109,10 @@ if (document.getElementById("bookImage")) {
 
 // Função de validação de CPF
 function validateCpf(cpf) {
+  if (cpf.length !== 11) {
+    return false;
+  }
+
   cpf = cpf.replace(/\D/g, "");
   if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
 
