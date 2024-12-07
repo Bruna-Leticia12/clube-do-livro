@@ -4,9 +4,8 @@ const users = [
   { email: "bruna@example.com", password: "bruna123" },
 ];
 
-generateBooks = () => {
+const generateBooks = () => {
   let books = [];
-
   for (let i = 1; i <= 71; i++) {
     books.push({
       title: `Livro ${i}`,
@@ -14,9 +13,9 @@ generateBooks = () => {
       image: `/assets/livro-${i}.jpg`,
     });
   }
-
   return books;
 };
+
 
 const books = generateBooks();
 
@@ -38,18 +37,18 @@ document.getElementById("loginForm")?.addEventListener("submit", function (e) {
 // Home Logic
 if (document.getElementById("booksGrid")) {
   const booksGrid = document.getElementById("booksGrid");
-  books.forEach((book) => {
-    console.log(book);
+  books.forEach((book, index) => {
+    const availability = Math.random() < 0.8 ? "Disponível" : "Indisponível";
     booksGrid.innerHTML += `
         <div class="col-md-4">
           <div class="card">
             <img src="${book.image}" class="card-img-top" alt="${book.title}">
             <div class="card-body text-center">
               <h5>${book.title}</h5>
-              <p>R$${book.price.toFixed(2)}</p>
-              <button class="btn btn-primary" onclick="purchase('${
-                book.title
-              }', ${book.price}, '${book.image}')">Comprar</button>
+              <p>${availability}</p>
+              <button class="btn btn-primary" ${
+                availability === "Indisponível" ? "disabled" : ""
+              } onclick="purchase('${book.title}', ${book.price}, '${book.image}')">Reservar</button>
             </div>
           </div>
         </div>
@@ -57,31 +56,51 @@ if (document.getElementById("booksGrid")) {
   });
 }
 
+// Função de compra
 function purchase(title, price, image) {
   localStorage.setItem("selectedBook", JSON.stringify({ title, price, image }));
   window.location.href = "compra.html";
 }
 
-// Purchase Page Logic
+// Lógica da página de compra
 if (document.getElementById("bookImage")) {
   const book = JSON.parse(localStorage.getItem("selectedBook"));
   document.getElementById("bookImage").src = book.image;
-  document.getElementById("price").value = `R$${book.price.toFixed(2)}`;
+  document.getElementById("name").value = book.title;
 
-  const paymentSelect = document.getElementById("payment");
+  const cpfInput = document.getElementById("cpf");
   const purchaseBtn = document.getElementById("purchaseBtn");
 
-  paymentSelect.addEventListener("change", () => {
-    purchaseBtn.disabled = paymentSelect.value === "";
+  cpfInput.addEventListener("input", (e) => {
+    const value = e.target.value.replace(/\D/g, "");
+    e.target.value = value
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    const isValidCpf = validateCpf(value);
+    purchaseBtn.disabled = !isValidCpf || !document.getElementById("name").value.trim();
   });
 
   purchaseBtn.addEventListener("click", () => {
-    alert("Compra realizada com sucesso!");
+    alert("Reserva de livro realizada com sucesso!");
     window.location.href = "home.html";
   });
 }
 
-// Logout Logic
-document.getElementById("logoutBtn")?.addEventListener("click", () => {
-  window.location.href = "index.html";
-});
+// Função de validação de CPF
+function validateCpf(cpf) {
+  cpf = cpf.replace(/\D/g, "");
+  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+  let soma = 0, resto;
+  for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf[9])) return false;
+
+  soma = 0;
+  for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
+  resto = (soma * 10) % 11;
+  return resto === parseInt(cpf[10]);
+}
