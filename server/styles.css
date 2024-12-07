@@ -17,5 +17,8 @@ body {
   #booksGrid .card img {
     margin: 0 auto;
   }
-  
+
+  .login-background {
+    background-image: url("/assets/background/background-login.avif");
+  }
   
