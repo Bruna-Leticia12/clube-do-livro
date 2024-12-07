@@ -82,9 +82,15 @@ if (document.getElementById("bookImage")) {
     purchaseBtn.disabled = !isValidCpf || !document.getElementById("name").value.trim();
   });
 
-  purchaseBtn.addEventListener("click", () => {
+  purchaseBtn.addEventListener("click", (e) => {
+
+    e.preventDefault();
+    
     alert("Reserva de livro realizada com sucesso!");
-    window.location.href = "home.html";
+
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 0); 
   });
 }
 
