@@ -1,0 +1,25 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#booksGrid .card {
+  text-align: center;
+}
+
+#booksGrid .card img {
+  margin: 0 auto;
+}
+
+.login-background {
+  background-image: url("/assets/background/background-login.avif");
+}

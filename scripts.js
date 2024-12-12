@@ -19,6 +19,7 @@ const generateBooks = () => {
 
 const books = generateBooks();
 
+
 // Login Logic
 document.getElementById("loginForm")?.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -37,7 +38,7 @@ document.getElementById("loginForm")?.addEventListener("submit", function (e) {
 // Home Logic
 if (document.getElementById("booksGrid")) {
   const booksGrid = document.getElementById("booksGrid");
-  books.forEach((book, index) => {
+  books.forEach((book) => {
     const availability = Math.random() < 0.8 ? "Disponível" : "Indisponível";
     booksGrid.innerHTML += `
         <div class="col-md-4">
@@ -46,9 +47,8 @@ if (document.getElementById("booksGrid")) {
             <div class="card-body text-center">
               <h5>${book.title}</h5>
               <p>${availability}</p>
-              <button class="btn btn-primary" ${
-                availability === "Indisponível" ? "disabled" : ""
-              } onclick="purchase('${book.title}', ${book.price}, '${book.image}')">Reservar</button>
+              <button class="btn btn-primary" ${availability === "Indisponível" ? "disabled" : ""
+      } onclick="purchase('${book.title}', ${book.price}, '${book.image}')">Reservar</button>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@ function purchase(title, price, image) {
 if (document.getElementById("bookImage")) {
   const book = JSON.parse(localStorage.getItem("selectedBook"));
   document.getElementById("bookImage").src = book.image;
-  
+
   const cpfInput = document.getElementById("cpf");
   const cpfError = document.getElementById("cpfError");
   const purchaseBtn = document.getElementById("purchaseBtn");
@@ -79,31 +79,27 @@ if (document.getElementById("bookImage")) {
       .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
     const isValidCpf = validateCpf(value);
-    
+
     cpfError.style.display = "none";
-    
-    if(e.target.value.length === 14){
+
+    if (e.target.value.length === 14) {
 
       if (!isValidCpf) {
         cpfError.style.display = "block";
       }
     }
 
-
-    
     purchaseBtn.disabled = !isValidCpf || !document.getElementById("name").value.trim();
   });
 
-
   purchaseBtn.addEventListener("click", (e) => {
-    
     e.preventDefault();
-    
+
     alert("Reserva de livro realizada com sucesso!");
 
     setTimeout(() => {
       window.location.href = "home.html";
-    }, 0); 
+    }, 0);
   });
 }
 
