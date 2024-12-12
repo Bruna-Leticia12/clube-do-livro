@@ -29,7 +29,7 @@ document.getElementById("loginForm")?.addEventListener("submit", function (e) {
   const user = users.find((u) => u.email === email && u.password === password);
 
   if (user) {
-    window.location.href = "home.html";
+    window.location.href = "home";
   } else {
     document.getElementById("errorMessage").classList.remove("d-none");
   }
@@ -59,7 +59,7 @@ if (document.getElementById("booksGrid")) {
 // Função de compra
 function purchase(title, price, image) {
   localStorage.setItem("selectedBook", JSON.stringify({ title, price, image }));
-  window.location.href = "compra.html";
+  window.location.href = "compra";
 }
 
 // Lógica da página de compra
@@ -98,7 +98,7 @@ if (document.getElementById("bookImage")) {
     alert("Reserva de livro realizada com sucesso!");
 
     setTimeout(() => {
-      window.location.href = "home.html";
+      window.location.href = "home";
     }, 0);
   });
 }

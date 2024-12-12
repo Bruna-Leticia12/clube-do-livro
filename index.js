@@ -4,14 +4,29 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
+app.set('view engine', 'ejs');
+
+app.set('views', path.join(__dirname, 'views'));
 
 app.use("/", express.static(path.join(__dirname, ".")));
 
 app.use("/assets", express.static(path.join(__dirname, "./assets")));
 
 app.get("/", (req, res) => {
-  res.send(
-    "<h1>Servidor de Imagens Ativo!</h1><p>Use /assets/livro-1.png para acessar uma imagem.</p>"
+  res.render(
+    'login'
+  );
+});
+
+app.get("/home", (req, res) => {
+  res.render(
+    'home'
+  );
+});
+
+app.get("/compra", (req, res) => {
+  res.render(
+    'compra'
   );
 });
 
