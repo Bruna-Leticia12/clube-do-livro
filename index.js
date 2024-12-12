@@ -4,8 +4,6 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-const staticPath = path.join(__dirname, "./assets");
-console.log("Servindo arquivos estáticos de:", staticPath);
 
 app.use("/", express.static(path.join(__dirname, ".")));
 
